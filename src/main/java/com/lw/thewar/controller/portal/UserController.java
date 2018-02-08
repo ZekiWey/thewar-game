@@ -114,6 +114,7 @@ public class UserController {
         if(userLoginInfo == null){
             return ServerResponse.createByErrorMessage("当前用户未登录");
         }
+        //123
         session.removeAttribute(Const.CURRENT_USER);
         return ServerResponse.createBySuccessMsg("退出成功");
     }
