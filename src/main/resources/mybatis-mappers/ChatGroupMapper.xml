@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lw.thewar.dao.ChatGroupMapper" >
+  <resultMap id="BaseResultMap" type="com.lw.thewar.pojo.ChatGroup" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <idArg column="owner_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="group_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="group_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="group_desc" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="head_image" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="is_public" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, owner_id, group_id, group_name, group_desc, head_image, is_public
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.lw.thewar.pojo.ChatGroupKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from chat_group
+    where id = #{id,jdbcType=INTEGER}
+      and owner_id = #{ownerId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.lw.thewar.pojo.ChatGroupKey" >
+    delete from chat_group
+    where id = #{id,jdbcType=INTEGER}
+      and owner_id = #{ownerId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lw.thewar.pojo.ChatGroup" >
+    insert into chat_group (id, owner_id, group_id, 
+      group_name, group_desc, head_image, 
+      is_public)
+    values (#{id,jdbcType=INTEGER}, #{ownerId,jdbcType=INTEGER}, #{groupId,jdbcType=BIGINT}, 
+      #{groupName,jdbcType=VARCHAR}, #{groupDesc,jdbcType=VARCHAR}, #{headImage,jdbcType=VARCHAR}, 
+      #{isPublic,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lw.thewar.pojo.ChatGroup" >
+    insert into chat_group
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="ownerId != null" >
+        owner_id,
+      </if>
+      <if test="groupId != null" >
+        group_id,
+      </if>
+      <if test="groupName != null" >
+        group_name,
+      </if>
+      <if test="groupDesc != null" >
+        group_desc,
+      </if>
+      <if test="headImage != null" >
+        head_image,
+      </if>
+      <if test="isPublic != null" >
+        is_public,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="ownerId != null" >
+        #{ownerId,jdbcType=INTEGER},
+      </if>
+      <if test="groupId != null" >
+        #{groupId,jdbcType=BIGINT},
+      </if>
+      <if test="groupName != null" >
+        #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="groupDesc != null" >
+        #{groupDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="headImage != null" >
+        #{headImage,jdbcType=VARCHAR},
+      </if>
+      <if test="isPublic != null" >
+        #{isPublic,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lw.thewar.pojo.ChatGroup" >
+    update chat_group
+    <set >
+      <if test="groupId != null" >
+        group_id = #{groupId,jdbcType=BIGINT},
+      </if>
+      <if test="groupName != null" >
+        group_name = #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="groupDesc != null" >
+        group_desc = #{groupDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="headImage != null" >
+        head_image = #{headImage,jdbcType=VARCHAR},
+      </if>
+      <if test="isPublic != null" >
+        is_public = #{isPublic,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+      and owner_id = #{ownerId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lw.thewar.pojo.ChatGroup" >
+    update chat_group
+    set group_id = #{groupId,jdbcType=BIGINT},
+      group_name = #{groupName,jdbcType=VARCHAR},
+      group_desc = #{groupDesc,jdbcType=VARCHAR},
+      head_image = #{headImage,jdbcType=VARCHAR},
+      is_public = #{isPublic,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+      and owner_id = #{ownerId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectHeadImageByGroupId" parameterType="long" resultType="string">
+    SELECT
+    head_image
+    FROM
+    chat_group
+    WHERE
+    group_id=#{groupId}
+  </select>
+  <select id="selectOwnerByGroupId" parameterType="long" resultType="integer">
+    SELECT
+    owner_id
+    FROM
+    chat_group
+    WHERE
+    group_id=#{groupId}
+  </select>
+  <delete id="deleteByGroupId" parameterType="long">
+    delete from chat_group
+    where group_id = #{groupId}
+  </delete>
+</mapper>

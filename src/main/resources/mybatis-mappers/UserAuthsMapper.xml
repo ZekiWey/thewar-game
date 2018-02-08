@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lw.thewar.dao.UserAuthsMapper" >
+  <resultMap id="BaseResultMap" type="com.lw.thewar.pojo.UserAuths" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="jh_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="gender" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="provinces" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="city" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="head_image" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="birthday" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="introduce" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="album" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <resultMap id="SearchFriendInfoResultMap" type="com.lw.thewar.vo.SearchFriendInfo">
+    <constructor >
+      <arg column="hxmap_account" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="head_image" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="gender" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="age" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="brithday" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="introduce" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="region" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <!--p.hxmap_account,-->
+  <!--a.name,-->
+  <!--a.head_image,-->
+  <!--if(a.gender=0,"女","男")as gender,-->
+  <!--YEAR(now()) - YEAR(a.birthday)  as age-->
+  <resultMap id="SearchLikeFriendInfoResultMap" type="com.lw.thewar.vo.SearchLikeFriendInfo">
+    <constructor >
+      <arg column="hxmap_account" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="head_image" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="gender" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="age" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <resultMap id="SearchFriendListInfoResultMap" type="com.lw.thewar.vo.FriendListInfo">
+    <constructor>
+      <arg column="hxmap_account" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="head_image" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <resultMap id="getNameGenderHeadMap" type="com.lw.thewar.vo.GroupUsers">
+    <constructor>
+      <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="gender" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="head_image" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <resultMap id="getMyAuth" type="com.lw.thewar.vo.MyAuth">
+    <constructor>
+      <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+      <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String"/>
+      <arg column="gender" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+      <arg column="region" jdbcType="VARCHAR" javaType="java.lang.String"/>
+      <arg column="head_image" jdbcType="VARCHAR" javaType="java.lang.String"/>
+      <arg column="age" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+      <arg column="birthday" jdbcType="VARCHAR" javaType="java.lang.String"/>
+      <arg column="introduce" jdbcType="VARCHAR" javaType="java.lang.String"/>
+      <arg column="album" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, jh_id, user_id, name, gender, provinces, city, head_image, birthday, introduce, 
+    album, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_auths
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from user_auths
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user_auths
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lw.thewar.pojo.UserAuths" >
+    insert into user_auths (id, jh_id, user_id, 
+      name, gender, provinces, 
+      city, head_image, birthday, 
+      introduce, album, create_time, 
+      update_time)
+    values (#{id,jdbcType=INTEGER}, #{jhId,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
+      #{name,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER}, #{provinces,jdbcType=VARCHAR}, 
+      #{city,jdbcType=VARCHAR}, #{headImage,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP}, 
+      #{introduce,jdbcType=VARCHAR}, #{album,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lw.thewar.pojo.UserAuths" >
+    insert into user_auths
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="jhId != null" >
+        jh_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="provinces != null" >
+        provinces,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="headImage != null" >
+        head_image,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="introduce != null" >
+        introduce,
+      </if>
+      <if test="album != null" >
+        album,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="jhId != null" >
+        #{jhId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="provinces != null" >
+        #{provinces,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="headImage != null" >
+        #{headImage,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="introduce != null" >
+        #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="album != null" >
+        #{album,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lw.thewar.pojo.UserAuths" >
+    update user_auths
+    <set >
+      <if test="jhId != null" >
+        jh_id = #{jhId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="provinces != null" >
+        provinces = #{provinces,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="headImage != null" >
+        head_image = #{headImage,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="introduce != null" >
+        introduce = #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="album != null" >
+        album = #{album,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lw.thewar.pojo.UserAuths" >
+    update user_auths
+    set jh_id = #{jhId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=INTEGER},
+      provinces = #{provinces,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      head_image = #{headImage,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=TIMESTAMP},
+      introduce = #{introduce,jdbcType=VARCHAR},
+      album = #{album,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByUserIdSelective" parameterType="com.lw.thewar.pojo.UserAuths">
+    update user_auths
+    <set >
+      <if test="jhId != null" >
+        jh_id = #{jhId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="provinces != null" >
+        provinces = #{provinces,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="introduce != null" >
+        introduce = #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updatePhotoById" parameterType="map">
+    UPDATE user_auths
+    set head_image=#{fileName}
+    where
+    user_id=#{userid}
+  </update>
+  <update id="updateAlbumById" parameterType="map">
+    UPDATE user_auths
+    set album=#{albumStr}
+    where
+    user_id=#{userid}
+  </update>
+
+  <select id="selectUserPhoneById" resultType="string" parameterType="int">
+    SELECT head_image
+    FROM
+    user_auths
+    WHERE
+    user_id=#{userId}
+  </select>
+
+  <select id="selectNameByUserId" resultType="string" parameterType="integer">
+    SELECT
+    name
+    FROM
+    user_auths
+    WHERE
+    user_id=#{userId}
+  </select>
+
+  <select id="selectHeadPhotoByUserId" resultType="java.lang.String" parameterType="integer">
+    SELECT
+    head_image
+    FROM
+    user_auths
+    WHERE
+    user_id=#{userId}
+  </select>
+
+  <select id="selectUserIdByLikeName" resultMap="SearchLikeFriendInfoResultMap" parameterType="string">
+    SELECT
+    p.hxmap_account,
+    a.name,
+    a.head_image,
+    if(a.gender=0,"女","男")as gender,
+    YEAR(now()) - YEAR(a.birthday)  as age
+    FROM
+    user u LEFT JOIN user_auths a ON u.id = a.user_id LEFT JOIN plugins p ON u.plugins_id = p.id
+    WHERE
+    name like #{name}
+  </select>
+
+  <select id="selectUserIdByUserId" resultMap="SearchFriendInfoResultMap" parameterType="integer">
+    SELECT
+    p.hxmap_account,
+    a.name,
+    a.head_image,
+    a.gender,
+    YEAR(now()) - YEAR(a.birthday)  as age,
+    CONCAT(a.provinces,"-",a.city) as region,
+    a.introduce,
+    date_format(a.birthday, '%Y-%m') as brithday
+    FROM
+    user u LEFT JOIN user_auths a ON u.id = a.user_id LEFT JOIN plugins p ON u.plugins_id = p.id
+    WHERE
+    u.id=#{userId}
+  </select>
+  <select id="selectFriendListInfobyHxUserNameList" resultMap="SearchFriendListInfoResultMap" parameterType="list">
+    SELECT
+    p.hxmap_account,
+    a.name,
+    a.head_image
+    FROM
+    user u LEFT JOIN user_auths a ON u.id = a.user_id LEFT JOIN plugins p ON u.plugins_id = p.id
+    WHERE
+    p.hxmap_account in
+    <foreach collection="list" index="index" item="item" open="(" close=")" separator=",">
+      #{item}
+    </foreach>
+  </select>
+  <select id="selectNameGenderHead" resultMap="getNameGenderHeadMap" parameterType="integer">
+    SELECT name,if(gender=0,"女","男")as gender,head_image
+    FROM user_auths
+    WHERE user_id=#{userId}
+  </select>
+  <select id="selectMyAuthByUserID" resultMap="getMyAuth" parameterType="integer">
+    SELECT
+    user_id,
+    name,
+    gender,
+    CONCAT(provinces,"-",city) as region,
+    head_image,
+    YEAR(now()) - YEAR(birthday)  as age,
+    date_format(birthday, '%Y-%m-%d') as birthday,
+    introduce,
+    album
+    FROM user_auths
+    WHERE user_id=#{userId}
+  </select>
+    <select id="selectAlbumByUserId" resultType="string" parameterType="integer">
+        SELECT
+        album
+        FROM user_auths
+        WHERE user_id=#{userId}
+    </select>
+  <select id="selectNamePhotoByUserId" parameterType="integer" resultType="map">
+    SELECT
+    name,head_image
+    FROM user_auths
+    WHERE user_id=#{userId}
+  </select>
+</mapper>

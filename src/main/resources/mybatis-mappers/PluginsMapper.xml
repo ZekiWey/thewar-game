@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lw.thewar.dao.PluginsMapper" >
+  <resultMap id="BaseResultMap" type="com.lw.thewar.pojo.Plugins" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="hxmap_account" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, hxmap_account, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from plugins
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from plugins
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lw.thewar.pojo.Plugins" useGeneratedKeys="true" keyProperty="id">
+    insert into plugins (id, hxmap_account, create_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{hxmapAccount,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lw.thewar.pojo.Plugins" >
+    insert into plugins
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="hxmapAccount != null" >
+        hxmap_account,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="hxmapAccount != null" >
+        #{hxmapAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lw.thewar.pojo.Plugins" >
+    update plugins
+    <set >
+      <if test="hxmapAccount != null" >
+        hxmap_account = #{hxmapAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lw.thewar.pojo.Plugins" >
+    update plugins
+    set hxmap_account = #{hxmapAccount,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectPlugins" resultType="java.lang.String" parameterType="int">
+    SELECT
+    hxmap_account
+    FROM
+    plugins
+    WHERE
+    id=#{plugins_id}
+  </select>
+  <select id="selectHXUsername" resultType="java.lang.Integer" parameterType="string">
+    SELECT
+    COUNT(1)
+    FROM
+    plugins
+    WHERE
+    hxmap_account=#{hxUsername}
+  </select>
+  <select id="selectHXUsernameByUserId" resultType="string" parameterType="integer">
+      SELECT
+      hxmap_account
+      FROM
+      user u,plugins p
+      WHERE
+      u.id = #{userId}
+      and u.plugins_id = p.id
+  </select>
+
+</mapper>
